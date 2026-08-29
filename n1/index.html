@@ -1,0 +1,675 @@
+<title>N1冲刺计划</title>
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@500;700;900&family=Noto+Sans+SC:wght@400;500;700&family=IBM+Plex+Mono:wght@500;600&display=swap">
+
+<style>
+  :root{
+    --paper: #efeee7;
+    --paper-raised: #f8f7f2;
+    --paper-sunken: #e6e4da;
+    --ink: #22262b;
+    --ink-soft: #5b5f5a;
+    --ink-faint: #8b8e86;
+    --indigo: #2c4a6e;
+    --indigo-deep: #1b3352;
+    --indigo-tint: #dfe6ee;
+    --vermillion: #a8442e;
+    --vermillion-tint: #f3e2dd;
+    --matcha: #4f7a5c;
+    --matcha-tint: #e2ebe2;
+    --gold: #a67c2e;
+    --gold-tint: #f0e6d1;
+    --line: #d9d6c9;
+    --shadow: 0 1px 2px rgba(34,38,43,0.06), 0 6px 20px -8px rgba(34,38,43,0.18);
+  }
+
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --paper: #1b1d1c;
+      --paper-raised: #232523;
+      --paper-sunken: #171817;
+      --ink: #e8e6df;
+      --ink-soft: #a6a9a0;
+      --ink-faint: #787b73;
+      --indigo: #8fb0dc;
+      --indigo-deep: #b7cdea;
+      --indigo-tint: #26344a;
+      --vermillion: #e08064;
+      --vermillion-tint: #402823;
+      --matcha: #8fc09a;
+      --matcha-tint: #223228;
+      --gold: #e0bb70;
+      --gold-tint: #3a3021;
+      --line: #34362f;
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 6px 20px -8px rgba(0,0,0,0.5);
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper: #1b1d1c;
+    --paper-raised: #232523;
+    --paper-sunken: #171817;
+    --ink: #e8e6df;
+    --ink-soft: #a6a9a0;
+    --ink-faint: #787b73;
+    --indigo: #8fb0dc;
+    --indigo-deep: #b7cdea;
+    --indigo-tint: #26344a;
+    --vermillion: #e08064;
+    --vermillion-tint: #402823;
+    --matcha: #8fc09a;
+    --matcha-tint: #223228;
+    --gold: #e0bb70;
+    --gold-tint: #3a3021;
+    --line: #34362f;
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 6px 20px -8px rgba(0,0,0,0.5);
+  }
+
+  *{ box-sizing: border-box; }
+  html,body{ margin:0; padding:0; }
+  body{
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "Noto Sans SC", "Hiragino Sans", "Microsoft YaHei", sans-serif;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  }
+
+  .page{ max-width: 920px; margin: 0 auto; padding: 0 24px 96px; }
+
+  h1,h2,h3{ font-family: "Noto Serif SC", "Songti SC", serif; font-weight: 900; text-wrap: balance; color: var(--ink); margin: 0; }
+  a{ color: var(--indigo); }
+
+  /* ---------- hero ---------- */
+  .hero{
+    padding: 64px 0 32px;
+    border-bottom: 1px solid var(--line);
+  }
+  .eyebrow{
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.78rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--vermillion);
+    margin: 0 0 14px;
+    font-weight: 600;
+  }
+  .hero h1{ font-size: clamp(2.2rem, 5vw, 3.1rem); line-height: 1.15; }
+  .lede{
+    max-width: 46ch;
+    font-size: 1.08rem;
+    color: var(--ink-soft);
+    margin: 14px 0 36px;
+  }
+
+  .dashboard{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    overflow: hidden;
+  }
+  .stat-block{
+    background: var(--paper-raised);
+    padding: 20px 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    min-width: 0;
+  }
+  .stat-label{
+    font-size: 0.74rem;
+    letter-spacing: 0.08em;
+    color: var(--ink-faint);
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+  .stat-value{
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 2.4rem;
+    font-weight: 600;
+    color: var(--indigo);
+    font-variant-numeric: tabular-nums;
+    line-height: 1;
+  }
+  .stat-unit{ font-size: 0.85rem; color: var(--ink-soft); margin-top: -6px; }
+
+  .score-bar-track{
+    position: relative;
+    height: 10px;
+    background: var(--paper-sunken);
+    border-radius: 6px;
+    overflow: visible;
+  }
+  .score-bar-fill{
+    position: absolute; inset: 0 auto 0 0;
+    background: var(--gold);
+    border-radius: 6px;
+  }
+  .score-bar-threshold{
+    position: absolute;
+    top: -4px; bottom: -4px;
+    width: 2px;
+    background: var(--vermillion);
+  }
+  .score-bar-threshold::after{
+    content: "合格线";
+    position: absolute;
+    top: -20px; left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.68rem;
+    color: var(--vermillion);
+    white-space: nowrap;
+    font-weight: 600;
+  }
+  .score-caption{ font-family: "IBM Plex Mono", monospace; font-size: 0.85rem; color: var(--ink-soft); margin-top: 6px; }
+
+  .tag-row{ display: flex; flex-wrap: wrap; gap: 8px; }
+  .tag{
+    display: inline-block;
+    font-size: 0.82rem;
+    font-weight: 600;
+    padding: 5px 12px;
+    border-radius: 999px;
+  }
+  .tag-vermillion{ background: var(--vermillion-tint); color: var(--vermillion); }
+  .tag-indigo{ background: var(--indigo-tint); color: var(--indigo); }
+  .tag-matcha{ background: var(--matcha-tint); color: var(--matcha); }
+  .tag-gold{ background: var(--gold-tint); color: var(--gold); }
+
+  /* ---------- generic sections ---------- */
+  section{ padding: 44px 0; border-bottom: 1px solid var(--line); }
+  section h2{ font-size: 1.5rem; margin-bottom: 18px; }
+  section > p{ color: var(--ink-soft); max-width: 62ch; }
+  section ul{ padding-left: 1.2em; color: var(--ink-soft); max-width: 62ch; }
+  section li{ margin-bottom: 8px; }
+  section li strong{ color: var(--ink); }
+
+  .callout{
+    background: var(--indigo-tint);
+    border-radius: 12px;
+    padding: 16px 20px;
+    color: var(--indigo-deep);
+    font-size: 0.95rem;
+    margin-top: 18px;
+  }
+
+  /* ---------- timeline overview ---------- */
+  .timeline-overview{
+    list-style: none;
+    margin: 0; padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    position: relative;
+  }
+  .timeline-overview li{
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding: 14px 0;
+    border-bottom: 1px dashed var(--line);
+  }
+  .timeline-overview li:last-child{ border-bottom: none; }
+  .timeline-overview .t-copy{ display: flex; flex-direction: column; gap: 2px; }
+  .timeline-overview .t-copy strong{ font-family: "Noto Serif SC", serif; font-size: 1.05rem; }
+  .timeline-overview .t-copy span{ font-family: "IBM Plex Mono", monospace; font-size: 0.8rem; color: var(--ink-faint); }
+  .timeline-overview .t-focus{ margin-left: auto; display:flex; gap:6px; }
+
+  .hanko{
+    flex: none;
+    width: 40px; height: 40px;
+    border: 2px solid var(--vermillion);
+    color: var(--vermillion);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: "Noto Serif SC", serif;
+    font-weight: 900;
+    font-size: 1.1rem;
+    transform: rotate(-2deg);
+  }
+  .hanko.large{ width: 52px; height: 52px; font-size: 1.4rem; }
+
+  /* ---------- phase sections ---------- */
+  .phase-head{ display: flex; align-items: center; gap: 18px; margin-bottom: 26px; }
+  .phase-dates{
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.8rem;
+    color: var(--ink-faint);
+    margin: 0 0 4px;
+  }
+
+  .task-grid{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+  @media (max-width: 640px){ .task-grid{ grid-template-columns: 1fr; } }
+
+  .task-card{
+    background: var(--paper-raised);
+    border-radius: 14px;
+    padding: 22px 24px;
+    box-shadow: var(--shadow);
+    border-top: 3px solid var(--indigo);
+  }
+  .task-card.listening{ border-top-color: var(--matcha); }
+  .task-card h3{
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--indigo);
+    margin-bottom: 10px;
+  }
+  .task-card.listening h3{ color: var(--matcha); }
+  .task-card p{ margin: 0 0 10px; color: var(--ink); font-size: 0.95rem; }
+  .task-card ul{ margin: 0; padding-left: 1.1em; font-size: 0.92rem; color: var(--ink-soft); }
+  .task-card li{ margin-bottom: 6px; }
+
+  .maintain{
+    font-size: 0.92rem;
+    color: var(--ink-soft);
+    background: var(--paper-sunken);
+    border-radius: 10px;
+    padding: 12px 16px;
+    margin: 0 0 22px;
+  }
+  .maintain strong{ color: var(--ink); }
+
+  table.week-rhythm{
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    font-size: 0.88rem;
+  }
+  table.week-rhythm caption{
+    text-align: left;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--ink-faint);
+    margin-bottom: 8px;
+    font-weight: 600;
+  }
+  table.week-rhythm th, table.week-rhythm td{
+    text-align: left;
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--line);
+    vertical-align: top;
+  }
+  table.week-rhythm th{
+    font-weight: 600;
+    color: var(--ink-faint);
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  table.week-rhythm td:first-child, table.week-rhythm th:first-child{
+    font-family: "IBM Plex Mono", monospace;
+    color: var(--ink-soft);
+    white-space: nowrap;
+  }
+  .table-scroll{ overflow-x: auto; }
+
+  .checkpoint{
+    font-size: 0.92rem;
+    padding: 14px 18px;
+    background: var(--gold-tint);
+    color: var(--ink);
+    border-radius: 10px;
+    margin: 0;
+  }
+  .checkpoint strong{ color: var(--gold); }
+
+  /* ---------- materials ---------- */
+  table.materials{
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.92rem;
+  }
+  table.materials th, table.materials td{
+    text-align: left;
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--line);
+  }
+  table.materials th{
+    font-size: 0.76rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--ink-faint);
+  }
+  table.materials td:first-child{ font-weight: 600; white-space: nowrap; }
+
+  /* ---------- checklist ---------- */
+  .checklist-grid{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  @media (max-width: 640px){ .checklist-grid{ grid-template-columns: 1fr; } }
+  .checklist-grid h3{
+    font-size: 0.95rem;
+    font-family: "Noto Serif SC", serif;
+    margin-bottom: 10px;
+    color: var(--indigo);
+  }
+  .checklist-grid ul{ padding-left: 1.2em; font-size: 0.92rem; color: var(--ink-soft); margin:0; }
+  .checklist-grid li{ margin-bottom: 6px; }
+
+  footer.note{
+    padding: 36px 0 0;
+    font-size: 0.88rem;
+    color: var(--ink-faint);
+    max-width: 62ch;
+  }
+</style>
+
+<div class="page">
+
+  <header class="hero">
+    <p class="eyebrow">日本語能力試験 N1・备考作战</p>
+    <h1>N1冲刺计划</h1>
+    <p class="lede">上次 96 / 180,只差一步没过线。这一轮把词汇和听力练扎实,目标 12 月 6 日稳稳过线,而不是压着及格线赌运气。</p>
+
+    <div class="dashboard">
+      <div class="stat-block">
+        <span class="stat-label">距 12/6 考试</span>
+        <span class="stat-value" id="countdown">--</span>
+        <span class="stat-unit">天</span>
+      </div>
+      <div class="stat-block">
+        <span class="stat-label">上次成绩</span>
+        <div class="score-bar-track" style="margin-top:14px;">
+          <div class="score-bar-fill" style="width:53.3%"></div>
+          <div class="score-bar-threshold" style="left:55.5%"></div>
+        </div>
+        <span class="score-caption">96 / 180 · 合格线 100</span>
+      </div>
+      <div class="stat-block">
+        <span class="stat-label">本轮重点</span>
+        <div class="tag-row">
+          <span class="tag tag-vermillion">文字・語彙</span>
+          <span class="tag tag-vermillion">聴解</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section class="diagnosis">
+    <h2>先搞清楚分是怎么丢的</h2>
+    <p>N1 只有两个计分科目:「言語知識(文字・語彙・文法)・読解」(0–120)和「聴解」(0–60),每科都必须单独 ≥19 分,总分再 ≥100 分——三个门槛都要过,任何一科崩了都会拖垮总分。96 分这个结果有两种可能拖累路径:</p>
+    <ul>
+      <li><strong>词汇拖累了言語知識・読解这一整科</strong>——就算语法和阅读没问题,生词量不够也会直接扣分,而且这科是文字語彙・文法・読解三块合算一个分数,词汇的坑会被平摊进总分里,不容易一眼看出来。</li>
+      <li><strong>聴解是独立一科,阅读再强也补不了它</strong>——如果这科卡在及格线附近甚至没到 19 分,总分再高也会不合格。</li>
+    </ul>
+    <div class="callout">建议先把成绩通知书上的分科成绩单独翻出来看一眼:言語知識・読解 和 聴解 各拿了多少分。如果哪科明显低于 19 分或压线,本计划里对应科目的比重可以往上调;如果两科都不算太差只是总分差 4 分,就按下面的均衡节奏走就行。</div>
+  </section>
+
+  <section class="phases-overview">
+    <h2>14 周,四个阶段</h2>
+    <ol class="timeline-overview">
+      <li>
+        <span class="hanko">1</span>
+        <div class="t-copy"><strong>基础重建期</strong><span>08.31 – 09.27 · 第1–4周</span></div>
+        <div class="t-focus"><span class="tag tag-indigo">词汇量重建</span></div>
+      </li>
+      <li>
+        <span class="hanko">2</span>
+        <div class="t-copy"><strong>强化输入期</strong><span>09.28 – 10.25 · 第5–8周</span></div>
+        <div class="t-focus"><span class="tag tag-matcha">精听起步</span></div>
+      </li>
+      <li>
+        <span class="hanko">3</span>
+        <div class="t-copy"><strong>实战冲刺期</strong><span>10.26 – 11.22 · 第9–12周</span></div>
+        <div class="t-focus"><span class="tag tag-gold">每周整套模考</span></div>
+      </li>
+      <li>
+        <span class="hanko">4</span>
+        <div class="t-copy"><strong>考前收尾期</strong><span>11.23 – 12.05 · 第13–14周</span></div>
+        <div class="t-focus"><span class="tag tag-vermillion">只复习不学新</span></div>
+      </li>
+    </ol>
+  </section>
+
+  <!-- ---------------- PHASE 1 ---------------- -->
+  <section class="phase" id="phase1">
+    <div class="phase-head">
+      <span class="hanko large">1</span>
+      <div>
+        <p class="phase-dates">08.31 – 09.27 · 第1–4周</p>
+        <h2>基础重建期</h2>
+      </div>
+    </div>
+
+    <div class="task-grid">
+      <div class="task-card vocab">
+        <h3>词汇</h3>
+        <p>系统过一轮 N1 核心词表,先把量堆起来,顺手建错词本。</p>
+        <ul>
+          <li>主教材二选一:《新完全掌握 N1 文字・語彙》或《日本語総まとめ N1 語彙》,每天推进 2–3 页</li>
+          <li>用 Anki 自建卡组,每天新学 40–50 词 + 复习前一天的词,固定在同一时段做</li>
+          <li>mikan App 的 N1 词库作为碎片时间(通勤、排队)的补充刷词工具</li>
+          <li>凡是做题或阅读时卡住的词,当场记进错词本,不要等周末补</li>
+        </ul>
+      </div>
+      <div class="task-card listening">
+        <h3>听力</h3>
+        <p>先磨耳朵重建语感,还不急着刷真题算分。</p>
+        <ul>
+          <li>每天 20–30 分钟:NHK News Web Easy 或 JapanesePod101 中上级材料,做跟读(シャドーイング)</li>
+          <li>每周精听 1 套 N1 历年听力真题——不计时,听完对照文本逐句核对,搞懂听漏在哪</li>
+          <li>目标不是分数,是把语流速度和长句结构听顺</li>
+        </ul>
+      </div>
+    </div>
+
+    <p class="maintain"><strong>阅读・语法维持:</strong>每周 2–3 篇 N1 长文泛读,保持手感即可;如果语法本身没大问题,这阶段不必新学语法点,把时间留给词汇和听力。</p>
+
+    <div class="table-scroll">
+      <table class="week-rhythm">
+        <caption>本阶段每周节奏(平日约 1.5h・周末约 2.5–3h,按你实际时间增减)</caption>
+        <thead><tr><th></th><th>周一 – 周五</th><th>周六</th><th>周日</th></tr></thead>
+        <tbody>
+          <tr><td>词汇</td><td>新词 40–50 个 + 复习(25min)</td><td>本周词汇复盘(40min)</td><td>错词本整理(30min)</td></tr>
+          <tr><td>听力</td><td>磨耳朵 + 跟读(25min)</td><td>精听真题 1 套,不计时(60min)</td><td>泛听播客 / 新闻(30min)</td></tr>
+          <tr><td>阅读・语法</td><td>—</td><td>长文 1 篇(40min)</td><td>—</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p class="checkpoint"><strong>阶段自测:</strong>第4周末计时做 1 套听力真题,记下分数作为基线,后面三个阶段都跟这个基线比进步。</p>
+  </section>
+
+  <!-- ---------------- PHASE 2 ---------------- -->
+  <section class="phase" id="phase2">
+    <div class="phase-head">
+      <span class="hanko large">2</span>
+      <div>
+        <p class="phase-dates">09.28 – 10.25 · 第5–8周</p>
+        <h2>强化输入期</h2>
+      </div>
+    </div>
+
+    <div class="task-grid">
+      <div class="task-card vocab">
+        <h3>词汇</h3>
+        <p>进入第二轮,专啃 N1 真正的失分点:易混淆词、惯用句、擬音語・擬態語、书面语。</p>
+        <ul>
+          <li>用真题文字語彙大题限时训练(每次 10–15 分钟),而不是继续裸背单词表</li>
+          <li>重点整理近义词辨析和惯用句(慣用句・ことわざ),这块最容易靠"感觉"选错</li>
+          <li>Anki 词库覆盖率目标:核心词表推进到 90% 以上</li>
+        </ul>
+      </div>
+      <div class="task-card listening">
+        <h3>听力</h3>
+        <p>精听 + 泛听结合,开始计时做真题。</p>
+        <ul>
+          <li>每天精听 1 段真题级材料,做听写(ディクテーション)——逐句写下来再对照原文</li>
+          <li>泛听放在通勤 / 日常时段,不追求全懂,练语流敏感度</li>
+          <li>每周计时做 2 套真题听力,做完立刻对答案,把错题按题型分类(概要理解 / 要点理解 / 統合理解 / 即時応答)</li>
+        </ul>
+      </div>
+    </div>
+
+    <p class="maintain"><strong>阅读・语法维持:</strong>每周 1 套完整读解真题(计时),归纳错题类型,别让读解分数被词汇听力的强化挤到没时间管。</p>
+
+    <div class="table-scroll">
+      <table class="week-rhythm">
+        <caption>本阶段每周节奏</caption>
+        <thead><tr><th></th><th>周一 – 周五</th><th>周六</th><th>周日</th></tr></thead>
+        <tbody>
+          <tr><td>词汇</td><td>限时文字語彙专项(15min)+ Anki 复习</td><td>近义词 / 惯用句整理(45min)</td><td>错词本复盘(30min)</td></tr>
+          <tr><td>听力</td><td>精听 + 听写 1 段(30min)</td><td>真题听力 1 套,计时(35min)+ 对答案分类</td><td>真题听力 1 套,计时(35min)+ 对答案分类</td></tr>
+          <tr><td>阅读・语法</td><td>—</td><td>—</td><td>读解真题 1 套,计时(50min)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p class="checkpoint"><strong>阶段自测:</strong>第8周末做 1 次全科目模考(含休息时间,按真实考试流程走),记录总分和两科分科分数,对照第一阶段基线看提升幅度。</p>
+
+    <div class="callout">如果 10 月要去宫古岛潜水,提前把出行那几天的听力精听和 Anki 复习量挪到前后几天补齐,别让错词本断档——回来第一天先花 30 分钟补复习,而不是直接接着学新内容。</div>
+  </section>
+
+  <!-- ---------------- PHASE 3 ---------------- -->
+  <section class="phase" id="phase3">
+    <div class="phase-head">
+      <span class="hanko large">3</span>
+      <div>
+        <p class="phase-dates">10.26 – 11.22 · 第9–12周</p>
+        <h2>实战冲刺期</h2>
+      </div>
+    </div>
+
+    <div class="task-grid">
+      <div class="task-card vocab">
+        <h3>词汇</h3>
+        <p>从"学新词"切换成"复习巩固 + 查漏补缺"。</p>
+        <ul>
+          <li>不再增加新词范围,Anki 里高频复习模考中反复出错的词</li>
+          <li>每次模考后,把文字語彙大题的错题单独抽出来精讲,搞清楚是不认识还是辨析错了</li>
+        </ul>
+      </div>
+      <div class="task-card listening">
+        <h3>听力</h3>
+        <p>每周至少 2 套完整真题精听 + 精细复盘。</p>
+        <ul>
+          <li>复盘时按题型拆开看丢分点:是概要理解跟不上节奏,还是統合理解信息量太大记不住</li>
+          <li>保持每天磨耳朵的习惯,别因为忙模考就停了输入</li>
+        </ul>
+      </div>
+    </div>
+
+    <p class="maintain"><strong>全真模考(本阶段核心):</strong>每周完整做 1 整套近 5 年内的 N1 真题,严格按考场时间节奏来(含休息),模考当天完成对答案 + 错题归类,第二天复盘弱点,不要拖到周末一起补。</p>
+
+    <div class="table-scroll">
+      <table class="week-rhythm">
+        <caption>本阶段每周节奏</caption>
+        <thead><tr><th></th><th>周一 – 周三</th><th>周四 – 周五</th><th>周末(整块)</th></tr></thead>
+        <tbody>
+          <tr><td>词汇</td><td>错词本高频复习(20min)</td><td>错词本高频复习(20min)</td><td>模考错题精讲(40min)</td></tr>
+          <tr><td>听力</td><td>精听 1 套 + 分类复盘(45min)</td><td>磨耳朵维持(20min)</td><td>整套真题模考(约170min,含休息)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p class="checkpoint"><strong>阶段自测:</strong>追踪 4 次模考的分数曲线。如果某一科连续两次低于 19 分警戒线,当周临时把另一科的复习量减半,集中火力补这一科。</p>
+  </section>
+
+  <!-- ---------------- PHASE 4 ---------------- -->
+  <section class="phase" id="phase4">
+    <div class="phase-head">
+      <span class="hanko large">4</span>
+      <div>
+        <p class="phase-dates">11.23 – 12.05 · 第13–14周</p>
+        <h2>考前收尾期</h2>
+      </div>
+    </div>
+
+    <div class="task-grid">
+      <div class="task-card vocab">
+        <h3>词汇</h3>
+        <p>只复习,不学新词。</p>
+        <ul>
+          <li>每天 20–30 分钟快速过一遍错词本,消灭"看着眼熟但想不起意思"的词</li>
+          <li>考前 3 天停止刷新题,只回顾错题本和高频易混词</li>
+        </ul>
+      </div>
+      <div class="task-card listening">
+        <h3>听力</h3>
+        <p>维持手感,避免疲劳作战。</p>
+        <ul>
+          <li>每天磨耳朵 + 2–3 次真题精听,重点巩固上阶段确认的弱势题型</li>
+          <li>不再追加新的完整模考,考前留出休息和调整作息的时间</li>
+        </ul>
+      </div>
+    </div>
+
+    <p class="maintain"><strong>作息调整:</strong>把起床和精力高峰逐步调整到考试当天的时间节奏上——听力对反应速度要求高,别在考试当天才第一次在那个时间点做听力题。</p>
+  </section>
+
+  <!-- ---------------- MATERIALS ---------------- -->
+  <section class="materials-section">
+    <h2>材料清单</h2>
+    <div class="table-scroll">
+      <table class="materials">
+        <thead><tr><th>类别</th><th>推荐材料</th><th>用途</th></tr></thead>
+        <tbody>
+          <tr><td>词汇主教材</td><td>新完全掌握 N1 文字・語彙 / 日本語総まとめ N1 語彙</td><td>系统过词,分类讲练</td></tr>
+          <tr><td>词汇碎片工具</td><td>Anki(自建卡组)+ mikan App</td><td>间隔重复复习,碎片时间刷词</td></tr>
+          <tr><td>听力磨耳朵</td><td>NHK News Web Easy、JapanesePod101 中上级</td><td>建立语感,跟读练习</td></tr>
+          <tr><td>听力真题</td><td>历年 N1 听力真题(近 5–10 年,7月/12月场次)</td><td>精听、听写、计时模考</td></tr>
+          <tr><td>读解 / 语法维持</td><td>N1 真题读解大题</td><td>保持手感,防止分数被词汇听力挤压</td></tr>
+          <tr><td>全真模考</td><td>N1 官方真题完整套卷</td><td>第9–12周每周一套,严格计时</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ---------------- EXAM DAY ---------------- -->
+  <section class="checklist-section">
+    <h2>考试当天</h2>
+    <div class="checklist-grid">
+      <div>
+        <h3>出门前确认</h3>
+        <ul>
+          <li>准考证、身份证件</li>
+          <li>2B 铅笔(备好几支)、橡皮</li>
+          <li>手表(会场通常不能看手机)</li>
+          <li>提前确认考场路线和到达时间</li>
+        </ul>
+      </div>
+      <div>
+        <h3>临场提醒</h3>
+        <ul>
+          <li>聴解只放一遍,模考时尽量用外放而不是耳机,提前适应考场音响的感觉</li>
+          <li>言語知識・読解時間紧,拿不准的题先跳过标记,别卡在一题上</li>
+          <li>考前 3 天不刷新题,只看错词本和高频易混词,保持手感而不是硬灌新内容</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <footer class="note">
+    <p>以上节奏按平日约 1.5–2 小时、周末约 3 小时估算——求职和论文都已经收尾,这段时间应该比之前宽裕,可以适当加量;如果实际能用的时间不同,按比例增减词汇量和真题套数就好,四阶段的结构不用变。</p>
+  </footer>
+
+</div>
+
+<script>
+  (function(){
+    try{
+      var target = new Date("2026-12-06T09:30:00+09:00");
+      var now = new Date();
+      var diff = target.getTime() - now.getTime();
+      var days = Math.max(0, Math.ceil(diff / 86400000));
+      document.getElementById('countdown').textContent = days;
+    }catch(e){
+      document.getElementById('countdown').textContent = "?";
+    }
+  })();
+</script>

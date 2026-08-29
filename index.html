@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>荔枝小站</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@500;700;900&family=Noto+Sans+SC:wght@400;500;700&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<style>
+  :root{
+    --paper: #efeee7;
+    --paper-raised: #f8f7f2;
+    --paper-sunken: #e6e4da;
+    --ink: #22262b;
+    --ink-soft: #5b5f5a;
+    --ink-faint: #8b8e86;
+    --indigo: #2c4a6e;
+    --indigo-tint: #dfe6ee;
+    --vermillion: #a8442e;
+    --vermillion-tint: #f3e2dd;
+    --matcha: #4f7a5c;
+    --matcha-tint: #e2ebe2;
+    --gold: #a67c2e;
+    --gold-tint: #f0e6d1;
+    --line: #d9d6c9;
+    --shadow: 0 1px 2px rgba(34,38,43,0.06), 0 6px 20px -8px rgba(34,38,43,0.18);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --paper: #1b1d1c; --paper-raised: #232523; --paper-sunken: #171817;
+      --ink: #e8e6df; --ink-soft: #a6a9a0; --ink-faint: #787b73;
+      --indigo: #8fb0dc; --indigo-tint: #26344a;
+      --vermillion: #e08064; --vermillion-tint: #402823;
+      --matcha: #8fc09a; --matcha-tint: #223228;
+      --gold: #e0bb70; --gold-tint: #3a3021;
+      --line: #34362f;
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 6px 20px -8px rgba(0,0,0,0.5);
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper: #1b1d1c; --paper-raised: #232523; --paper-sunken: #171817;
+    --ink: #e8e6df; --ink-soft: #a6a9a0; --ink-faint: #787b73;
+    --indigo: #8fb0dc; --indigo-tint: #26344a;
+    --vermillion: #e08064; --vermillion-tint: #402823;
+    --matcha: #8fc09a; --matcha-tint: #223228;
+    --gold: #e0bb70; --gold-tint: #3a3021;
+    --line: #34362f;
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 6px 20px -8px rgba(0,0,0,0.5);
+  }
+  *{ box-sizing: border-box; }
+  html,body{ margin:0; padding:0; }
+  body{
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "Noto Sans SC", "Hiragino Sans", "Microsoft YaHei", sans-serif;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+  @media (prefers-reduced-motion: reduce){ *{ animation-duration:.01ms !important; transition-duration:.01ms !important; } }
+
+  .page{ max-width: 760px; margin: 0 auto; padding: 0 24px 96px; }
+
+  header.hero{ padding: 72px 0 36px; border-bottom: 1px solid var(--line); }
+  .eyebrow{
+    font-family: "IBM Plex Mono", monospace;
+    font-size: .78rem; letter-spacing: .12em; text-transform: uppercase;
+    color: var(--vermillion); font-weight: 600; margin: 0 0 14px;
+  }
+  h1{
+    font-family: "Noto Serif SC", "Songti SC", serif; font-weight: 900;
+    font-size: clamp(2.1rem, 5vw, 2.9rem); line-height: 1.2; margin: 0;
+    text-wrap: balance; color: var(--ink);
+  }
+  .lede{ max-width: 46ch; font-size: 1.05rem; color: var(--ink-soft); margin: 14px 0 0; }
+
+  .list{ padding: 40px 0; display: flex; flex-direction: column; gap: 14px; }
+
+  .card{
+    display: flex; align-items: center; gap: 18px;
+    background: var(--paper-raised);
+    border-radius: 14px;
+    padding: 20px 22px;
+    box-shadow: var(--shadow);
+    border-left: 3px solid var(--indigo);
+    text-decoration: none;
+    color: inherit;
+  }
+  .card.disabled{
+    border-left: 3px dashed var(--line);
+    box-shadow: none;
+    background: transparent;
+    border: 1px dashed var(--line);
+    opacity: .7;
+  }
+  .card-mark{
+    flex: none; width: 40px; height: 40px; border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: "Noto Serif SC", serif; font-weight: 900; font-size: 1.05rem;
+    background: var(--indigo-tint); color: var(--indigo);
+  }
+  .card.disabled .card-mark{ background: var(--paper-sunken); color: var(--ink-faint); }
+  .card-body{ flex: 1; min-width: 0; }
+  .card-body h2{
+    font-family: "Noto Serif SC", serif; font-size: 1.08rem; margin: 0 0 4px; color: var(--ink);
+  }
+  .card-body p{ margin: 0; font-size: .88rem; color: var(--ink-soft); }
+  .card-tag{
+    flex: none; font-size: .74rem; font-weight: 600; padding: 4px 10px;
+    border-radius: 999px; white-space: nowrap;
+  }
+  .tag-live{ background: var(--matcha-tint); color: var(--matcha); }
+  .tag-soon{ background: var(--paper-sunken); color: var(--ink-faint); }
+
+  footer.note{
+    padding: 30px 0 0; font-size: .84rem; color: var(--ink-faint); max-width: 60ch;
+  }
+</style>
+</head>
+<body>
+<div class="page">
+  <header class="hero">
+    <p class="eyebrow">私人空间 · 仅自己可见</p>
+    <h1>荔枝小站</h1>
+    <p class="lede">自己写的小工具和计划都放这儿，一个网址就能打开，不用再翻聊天记录找文件。</p>
+  </header>
+
+  <section class="list">
+    <a class="card" href="./n1/">
+      <span class="card-mark">N1</span>
+      <div class="card-body">
+        <h2>N1 冲刺计划</h2>
+        <p>14 周备考安排，词汇 + 听力强化，目标 12 月 6 日</p>
+      </div>
+      <span class="card-tag tag-live">已上线</span>
+    </a>
+
+    <div class="card disabled">
+      <span class="card-mark">TTS</span>
+      <div class="card-body">
+        <h2>TTS 工具</h2>
+        <p>文字转语音小工具</p>
+      </div>
+      <span class="card-tag tag-soon">待上传</span>
+    </div>
+
+    <div class="card disabled">
+      <span class="card-mark">进</span>
+      <div class="card-body">
+        <h2>进度便签</h2>
+        <p>日常任务 / 进度跟踪便签</p>
+      </div>
+      <span class="card-tag tag-soon">待上传</span>
+    </div>
+
+    <div class="card disabled">
+      <span class="card-mark">DZT</span>
+      <div class="card-body">
+        <h2>DZT Viewer</h2>
+        <p>DZT 文件查看器</p>
+      </div>
+      <span class="card-tag tag-soon">待上传</span>
+    </div>
+  </section>
+
+  <footer class="note">
+    <p>以后加新项目：把新的 .html 文件传进同一个 GitHub 仓库，再回到这个文件里加一张卡片链接过去就行，Cloudflare Pages 会自动重新部署。</p>
+  </footer>
+</div>
+</body>
+</html>
