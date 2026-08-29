@@ -123,47 +123,44 @@
     <p class="lede">自己写的小工具和计划都放这儿，一个网址就能打开，不用再翻聊天记录找文件。</p>
   </header>
 
-  <section class="list">
-    <a class="card" href="./n1/">
-      <span class="card-mark">N1</span>
-      <div class="card-body">
-        <h2>N1 冲刺计划</h2>
-        <p>14 周备考安排，词汇 + 听力强化，目标 12 月 6 日</p>
-      </div>
-      <span class="card-tag tag-live">已上线</span>
-    </a>
-
-    <div class="card disabled">
-      <span class="card-mark">TTS</span>
-      <div class="card-body">
-        <h2>TTS 工具</h2>
-        <p>文字转语音小工具</p>
-      </div>
-      <span class="card-tag tag-soon">待上传</span>
-    </div>
-
-    <div class="card disabled">
-      <span class="card-mark">进</span>
-      <div class="card-body">
-        <h2>进度便签</h2>
-        <p>日常任务 / 进度跟踪便签</p>
-      </div>
-      <span class="card-tag tag-soon">待上传</span>
-    </div>
-
-    <div class="card disabled">
-      <span class="card-mark">DZT</span>
-      <div class="card-body">
-        <h2>DZT Viewer</h2>
-        <p>DZT 文件查看器</p>
-      </div>
-      <span class="card-tag tag-soon">待上传</span>
-    </div>
+  <section class="list" id="project-list">
+    <p style="color:var(--ink-faint); font-size:.9rem;">加载中…</p>
   </section>
 
   <footer class="note">
-    <p>以后加新项目：把新的 .html 文件传进同一个 GitHub 仓库，再回到这个文件里加一张卡片链接过去就行，Cloudflare Pages 会自动重新部署。</p>
+    <p>以后加新项目：把新的项目文件夹传进 GitHub 仓库，再打开 <code>projects.json</code> 加一条记录（补上 mark / title / desc / path，status 从 "soon" 改成 "live"），保存后这里会自动出现对应的卡片，不用再碰这份 HTML。</p>
   </footer>
 </div>
+
+<script>
+  fetch('./projects.json')
+    .then(function(res){ return res.json(); })
+    .then(renderProjects)
+    .catch(function(){
+      document.getElementById('project-list').innerHTML =
+        '<p style="color:var(--vermillion); font-size:.9rem;">项目列表加载失败，检查根目录下 projects.json 是否存在、格式是否正确。</p>';
+    });
+
+  function renderProjects(list){
+    var container = document.getElementById('project-list');
+    container.innerHTML = list.map(function(item){
+      var isLive = item.status === 'live';
+      var tagClass = isLive ? 'tag-live' : 'tag-soon';
+      var tagText = isLive ? '已上线' : '待上传';
+      var cardOpenTag = isLive
+        ? '<a class="card" href="' + item.path + '">'
+        : '<div class="card disabled">';
+      var cardCloseTag = isLive ? '</a>' : '</div>';
+      return cardOpenTag +
+        '<span class="card-mark">' + item.mark + '</span>' +
+        '<div class="card-body">' +
+          '<h2>' + item.title + '</h2>' +
+          '<p>' + item.desc + '</p>' +
+        '</div>' +
+        '<span class="card-tag ' + tagClass + '">' + tagText + '</span>' +
+      cardCloseTag;
+    }).join('');
+  }
+</script>
 </body>
 </html>
