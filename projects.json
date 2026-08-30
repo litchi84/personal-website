@@ -16,11 +16,11 @@
     "status": "soon"
   }
   {
-  "id": "bank_comparison",
-  "mark": "BANK",
-  "title": "邮政银行 vs 三井住友 vs 中国银行对比分析",
-  "desc": "完整描述",
-  "path": "./bank-comparison/",
-  "status": "live"
+    "id": "bank_comparison",
+    "mark": "BANK",
+    "title": "邮政银行 vs 三井住友 vs 中国银行对比分析",
+    "desc": "完整描述",
+    "path": "./bank-comparison/",
+    "status": "live"
 }
 ]
