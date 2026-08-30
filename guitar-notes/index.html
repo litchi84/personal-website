@@ -1,0 +1,815 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>指板笔记 · 荔枝小站</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Public+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --bg:#F6F1E7;
+    --surface:#EDE3CF;
+    --surface-2:#E3D6BB;
+    --ink:#241C14;
+    --muted:#6B5D4D;
+    --border:#D9CBAA;
+    --accent:#97701A;      /* brass — dominant / 属 */
+    --accent-ink:#FBF6EA;
+    --tonic:#8C4A33;       /* 主 */
+    --subdom:#3F6E66;      /* 下属 */
+    --shadow: 0 1px 2px rgba(36,28,20,.06), 0 8px 24px -12px rgba(36,28,20,.18);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#1E1712;
+      --surface:#271E16;
+      --surface-2:#33281D;
+      --ink:#F1E7D6;
+      --muted:#B8A98F;
+      --border:#40342A;
+      --accent:#D4AF37;
+      --accent-ink:#1E1712;
+      --tonic:#C97456;
+      --subdom:#6FA79C;
+      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 12px 28px -14px rgba(0,0,0,.55);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#1E1712;
+    --surface:#271E16;
+    --surface-2:#33281D;
+    --ink:#F1E7D6;
+    --muted:#B8A98F;
+    --border:#40342A;
+    --accent:#D4AF37;
+    --accent-ink:#1E1712;
+    --tonic:#C97456;
+    --subdom:#6FA79C;
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 12px 28px -14px rgba(0,0,0,.55);
+  }
+
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Public Sans', -apple-system, "Microsoft YaHei", sans-serif;
+    font-size:16px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{ background: var(--accent); color:var(--accent-ink); }
+
+  h1,h2,h3,h4{
+    font-family:'Fraunces', Georgia, "Noto Serif SC", serif;
+    font-weight:600;
+    text-wrap:balance;
+    margin:0;
+    letter-spacing:-.01em;
+  }
+  .mono{ font-family:'JetBrains Mono', ui-monospace, monospace; font-variant-numeric:tabular-nums; }
+
+  a{ color:var(--accent); }
+
+  /* ---------- app shell ---------- */
+  .app{
+    display:grid;
+    grid-template-columns: 248px 1fr;
+    min-height:100vh;
+  }
+  @media (max-width: 860px){
+    .app{ grid-template-columns: 1fr; }
+  }
+
+  .sidebar{
+    background:var(--surface);
+    border-right:1px solid var(--border);
+    padding:28px 18px;
+    display:flex;
+    flex-direction:column;
+    gap:22px;
+    position:sticky;
+    top:0;
+    height:100vh;
+    overflow-y:auto;
+  }
+  @media (max-width: 860px){
+    .sidebar{
+      position:static;
+      height:auto;
+      border-right:none;
+      border-bottom:1px solid var(--border);
+      padding:16px 16px 6px;
+    }
+  }
+
+  .brand{
+    display:flex;
+    flex-direction:column;
+    gap:2px;
+    padding:0 10px 6px;
+  }
+  .brand .mark{ font-size:26px; font-weight:700; letter-spacing:-.02em; }
+  .brand .sub{ font-size:12.5px; color:var(--muted); letter-spacing:.02em; }
+
+  nav.steps{
+    display:flex;
+    flex-direction:column;
+    gap:3px;
+  }
+  @media (max-width: 860px){
+    nav.steps{
+      flex-direction:row;
+      overflow-x:auto;
+      gap:6px;
+      padding-bottom:8px;
+      -webkit-overflow-scrolling:touch;
+    }
+  }
+  .step-btn{
+    all:unset;
+    cursor:pointer;
+    display:flex;
+    align-items:baseline;
+    gap:10px;
+    padding:9px 10px;
+    border-radius:8px;
+    font-size:14.5px;
+    color:var(--muted);
+    white-space:nowrap;
+    transition:background .15s ease, color .15s ease;
+  }
+  .step-btn .n{ font-family:'JetBrains Mono',monospace; font-size:12px; opacity:.7; }
+  .step-btn:hover{ background:var(--surface-2); color:var(--ink); }
+  .step-btn:focus-visible{ outline:2px solid var(--accent); outline-offset:2px; }
+  .step-btn.active{ background:var(--surface-2); color:var(--ink); font-weight:600; }
+  .step-btn.active .n{ color:var(--accent); opacity:1; }
+
+  .sidebar-foot{
+    margin-top:auto;
+    padding:10px 10px 0;
+    font-size:12px;
+    color:var(--muted);
+    border-top:1px solid var(--border);
+    padding-top:14px;
+  }
+  @media (max-width: 860px){ .sidebar-foot{ display:none; } }
+
+  main{
+    padding: 44px clamp(20px, 5vw, 64px) 90px;
+    max-width: 920px;
+  }
+  section.panel{ display:none; }
+  section.panel.active{ display:block; animation: fade .25s ease; }
+  @media (prefers-reduced-motion: reduce){ section.panel.active{ animation:none; } }
+  @keyframes fade{ from{opacity:0; transform:translateY(4px);} to{opacity:1; transform:none;} }
+
+  .eyebrow{
+    font-family:'JetBrains Mono',monospace;
+    font-size:12px;
+    letter-spacing:.09em;
+    text-transform:uppercase;
+    color:var(--accent);
+    margin-bottom:10px;
+  }
+  h1.title{ font-size:clamp(28px,3.4vw,38px); margin-bottom:6px; }
+  .dek{ color:var(--muted); font-size:16px; max-width:60ch; margin-bottom:34px; }
+
+  h2.sec{ font-size:21px; margin:40px 0 14px; }
+  h2.sec:first-of-type{ margin-top:0; }
+  h3.sub{ font-size:16.5px; margin:22px 0 10px; color:var(--ink); }
+  p{ margin:0 0 14px; max-width:66ch; }
+  p.tight{ margin-bottom:8px; }
+
+  ul.list, ol.list{ margin:0 0 16px; padding-left:1.3em; max-width:64ch; }
+  ul.list li, ol.list li{ margin-bottom:7px; }
+
+  .card{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:20px 22px;
+    box-shadow:var(--shadow);
+    margin-bottom:18px;
+  }
+  .card + .card{ margin-top:0; }
+  .grid2{ display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  .grid3{ display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+  @media (max-width:700px){ .grid2, .grid3{ grid-template-columns:1fr; } }
+
+  .callout{
+    border-left:3px solid var(--accent);
+    background:var(--surface);
+    border-radius:0 10px 10px 0;
+    padding:14px 18px;
+    font-size:14.5px;
+    color:var(--ink);
+    margin:16px 0 22px;
+    max-width:64ch;
+  }
+  .callout b{ color:var(--accent); }
+  .callout.tonic{ border-color:var(--tonic); }
+  .callout.tonic b{ color:var(--tonic); }
+
+  /* ---------- pills / tags ---------- */
+  .pill{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:11.5px;
+    padding:3px 9px;
+    border-radius:999px;
+    border:1px solid var(--border);
+    color:var(--muted);
+  }
+  .pill.tonic{ color:var(--tonic); border-color:color-mix(in srgb, var(--tonic) 45%, var(--border)); }
+  .pill.sub{ color:var(--subdom); border-color:color-mix(in srgb, var(--subdom) 45%, var(--border)); }
+  .pill.dom{ color:var(--accent); border-color:color-mix(in srgb, var(--accent) 45%, var(--border)); }
+
+  /* ---------- tables ---------- */
+  .tbl-wrap{ overflow-x:auto; margin:0 0 20px; border:1px solid var(--border); border-radius:10px; }
+  table{ border-collapse:collapse; width:100%; min-width:520px; font-size:14.5px; }
+  thead th{
+    text-align:left; font-family:'JetBrains Mono',monospace; font-size:11.5px;
+    text-transform:uppercase; letter-spacing:.06em; color:var(--muted);
+    background:var(--surface-2); padding:10px 14px; border-bottom:1px solid var(--border);
+  }
+  tbody td{ padding:11px 14px; border-bottom:1px solid var(--border); vertical-align:top; }
+  tbody tr:last-child td{ border-bottom:none; }
+  tbody tr:hover{ background:color-mix(in srgb, var(--surface-2) 55%, transparent); }
+
+  /* ---------- chord diagrams ---------- */
+  .chord-row{ display:flex; flex-wrap:wrap; gap:22px; margin:10px 0 26px; }
+  .chord-card{
+    display:flex; flex-direction:column; align-items:center; gap:8px;
+    width:150px;
+  }
+  .chord-card .name{ font-family:'JetBrains Mono',monospace; font-weight:700; font-size:15px; }
+  .chord-card .cap{ font-size:12px; color:var(--muted); text-align:center; }
+  svg.diagram{ display:block; }
+  .fret-label{ font-size:11px; fill:var(--muted); font-family:'JetBrains Mono',monospace; }
+  .note-txt{ font-size:11px; fill:var(--accent-ink); font-family:'JetBrains Mono',monospace; font-weight:700; text-anchor:middle; dominant-baseline:central; }
+
+  /* ---------- fretboard (pentatonic) ---------- */
+  .fretboard-wrap{ overflow-x:auto; margin:14px 0 22px; }
+
+  /* ---------- checklist ---------- */
+  .check-item{
+    display:flex; align-items:flex-start; gap:12px;
+    padding:11px 4px; border-bottom:1px solid var(--border);
+    cursor:pointer; font-size:14.5px;
+  }
+  .check-item:last-child{ border-bottom:none; }
+  .check-item input{
+    appearance:none; -webkit-appearance:none;
+    width:18px; height:18px; min-width:18px; margin-top:2px;
+    border:1.5px solid var(--muted); border-radius:5px;
+    display:grid; place-items:center; cursor:pointer;
+  }
+  .check-item input:checked{ background:var(--accent); border-color:var(--accent); }
+  .check-item input:checked::after{
+    content:""; width:9px; height:5px; border-left:2px solid var(--accent-ink);
+    border-bottom:2px solid var(--accent-ink); transform:rotate(-45deg) translate(0,-1px);
+  }
+  .check-item span.done{ color:var(--muted); text-decoration:line-through; }
+
+  .progress-bar{
+    height:6px; border-radius:99px; background:var(--surface-2);
+    overflow:hidden; margin:6px 0 22px; max-width:64ch;
+  }
+  .progress-bar > i{ display:block; height:100%; background:var(--accent); border-radius:99px; transition:width .3s ease; }
+
+  .stepper-nav{
+    display:flex; justify-content:space-between; gap:12px; margin-top:48px;
+    border-top:1px solid var(--border); padding-top:22px;
+  }
+  .stepper-btn{
+    all:unset; cursor:pointer; display:flex; flex-direction:column; gap:2px;
+    padding:10px 14px; border-radius:10px; border:1px solid var(--border);
+    background:var(--surface); font-size:13.5px; color:var(--muted);
+    max-width:46%;
+  }
+  .stepper-btn:hover{ border-color:var(--accent); color:var(--ink); }
+  .stepper-btn .lbl{ font-family:'JetBrains Mono',monospace; font-size:10.5px; text-transform:uppercase; letter-spacing:.06em; }
+  .stepper-btn .ttl{ color:var(--ink); font-weight:600; font-size:14.5px; }
+  .stepper-btn.next{ text-align:right; align-items:flex-end; margin-left:auto; }
+
+  code{
+    font-family:'JetBrains Mono',monospace; font-size:.92em;
+    background:var(--surface-2); padding:1px 6px; border-radius:5px;
+  }
+</style>
+</head>
+<body>
+
+
+<div class="app">
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="mark">指板笔记</div>
+      <div class="sub">乐理 · 和弦 · 即兴 — 以《朵儿》为练习场</div>
+    </div>
+    <nav class="steps" id="nav"></nav>
+    <div class="sidebar-foot">进度会保存在这台设备的浏览器里，下次打开还在。</div>
+  </aside>
+
+  <main id="main"></main>
+</div>
+
+<script>
+const CHORDS = {
+  C:  { name:"C",  base:1, frets:[-1,3,2,0,1,0], fingers:[null,3,2,null,1,null] },
+  G:  { name:"G",  base:1, frets:[3,2,0,0,0,3],  fingers:[3,2,null,null,null,4] },
+  Am: { name:"Am", base:1, frets:[-1,0,2,2,1,0], fingers:[null,null,2,3,1,null] },
+  F:  { name:"F",  base:1, frets:[1,3,3,2,1,1],  fingers:[1,3,4,2,1,1], barre:{fret:1,from:0,to:5} },
+};
+
+const NS = "http://www.w3.org/2000/svg";
+function svgEl(tag, attrs){
+  const el = document.createElementNS(NS, tag);
+  for(const k in attrs) el.setAttribute(k, attrs[k]);
+  return el;
+}
+
+// standard 6-string open chord diagram, strings index 0(low E)..5(high e)
+function renderChordDiagram(container, chord){
+  const W = 130, H = 150;
+  const left = 18, right = 112, top = 34, bottom = 130;
+  const nStrings = 6, nFrets = 4;
+  const stepX = (right-left)/(nStrings-1);
+  const stepY = (bottom-top)/nFrets;
+
+  const svg = svgEl("svg", { class:"diagram", viewBox:`0 0 ${W} ${H}`, width:130, height:150, role:"img",
+    "aria-label": `${chord.name} 和弦指法图` });
+
+  // nut (thicker top line) or base-fret label
+  if(chord.base === 1){
+    svg.appendChild(svgEl("line", { x1:left, y1:top, x2:right, y2:top, stroke:"currentColor", "stroke-width":3 }));
+  } else {
+    svg.appendChild(svgEl("line", { x1:left, y1:top, x2:right, y2:top, stroke:"currentColor", "stroke-width":1 }));
+    const t = svgEl("text", { x:left-10, y:top+stepY*0.7, class:"fret-label", "text-anchor":"end" });
+    t.textContent = chord.base + "fr";
+    svg.appendChild(t);
+  }
+  // frets
+  for(let f=1; f<=nFrets; f++){
+    const y = top + f*stepY;
+    svg.appendChild(svgEl("line", { x1:left, y1:y, x2:right, y2:y, stroke:"currentColor", "stroke-width":1, opacity:.45 }));
+  }
+  // strings
+  for(let s=0; s<nStrings; s++){
+    const x = left + s*stepX;
+    svg.appendChild(svgEl("line", { x1:x, y1:top, x2:x, y2:bottom, stroke:"currentColor", "stroke-width":1, opacity:.6 }));
+  }
+  // barre
+  if(chord.barre){
+    const y = top + (chord.barre.fret-0.5)*stepY;
+    const x1 = left + chord.barre.from*stepX, x2 = left + chord.barre.to*stepX;
+    svg.appendChild(svgEl("line", { x1, y1:y, x2, y2:y, stroke:"currentColor", "stroke-width":9, "stroke-linecap":"round", opacity:.85 }));
+  }
+  // open/mute markers + finger dots
+  chord.frets.forEach((f, s) => {
+    const x = left + s*stepX;
+    if(f === -1){
+      const t = svgEl("text", { x, y: top-14, class:"fret-label", "text-anchor":"middle" });
+      t.textContent = "×"; svg.appendChild(t);
+    } else if(f === 0){
+      svg.appendChild(svgEl("circle", { cx:x, cy: top-11, r:4.5, fill:"none", stroke:"currentColor", "stroke-width":1.4 }));
+    } else {
+      const y = top + (f-0.5)*stepY;
+      svg.appendChild(svgEl("circle", { cx:x, cy:y, r:7.5, fill:"var(--accent)" }));
+      if(chord.fingers && chord.fingers[s]){
+        const t = svgEl("text", { x, y, class:"note-txt" });
+        t.textContent = chord.fingers[s];
+        svg.appendChild(t);
+      }
+    }
+  });
+
+  container.appendChild(svg);
+}
+
+// movable minor-pentatonic "box 1" pattern, root marked on 6th string
+function renderPentatonicBox(container){
+  const W = 420, H = 190;
+  const left = 46, right = 400, top = 30, bottom = 160;
+  const nStrings = 6, nFrets = 4;
+  const stepX = (right-left)/nFrets;
+  const stepY = (bottom-top)/(nStrings-1);
+  const stringNames = ["E","A","D","G","B","e"];
+
+  // offsets from root fret R, per string (low E -> high e), degrees relative to minor pentatonic
+  const pattern = [
+    [0,3],[0,2],[0,2],[0,2],[0,3],[0,3]
+  ];
+
+  const svg = svgEl("svg", { class:"diagram", viewBox:`0 0 ${W} ${H}`, width:"100%", height:190,
+    role:"img", "aria-label":"movable 小调五声音阶 box1 指板图，横向为品，纵向为弦" });
+
+  // strings (horizontal)
+  for(let s=0; s<nStrings; s++){
+    const y = top + s*stepY;
+    svg.appendChild(svgEl("line", { x1:left, y1:y, x2:right, y2:y, stroke:"currentColor", "stroke-width":1, opacity:.55 }));
+    const t = svgEl("text", { x:left-16, y:y, class:"fret-label", "text-anchor":"middle", "dominant-baseline":"central" });
+    t.textContent = stringNames[s]; svg.appendChild(t);
+  }
+  // frets (vertical), R..R+4 shown as relative 0..4
+  for(let f=0; f<=nFrets; f++){
+    const x = left + f*stepX;
+    svg.appendChild(svgEl("line", { x1:x, y1:top, x2:x, y2:bottom, stroke:"currentColor", "stroke-width": f===0?2.4:1, opacity:f===0?.9:.35 }));
+    const t = svgEl("text", { x, y:bottom+18, class:"fret-label", "text-anchor":"middle" });
+    t.textContent = f===0 ? "R" : "R+"+f;
+    svg.appendChild(t);
+  }
+  // dots
+  pattern.forEach((offsets, s) => {
+    const y = top + s*stepY;
+    offsets.forEach(o => {
+      const x = left + o*stepX;
+      const isRoot = (o===0);
+      svg.appendChild(svgEl("circle", { cx:x, cy:y, r:9, fill: isRoot ? "var(--tonic)" : "var(--accent)", opacity: isRoot?1:.85 }));
+      if(isRoot){
+        const t = svgEl("text", { x, y, class:"note-txt" }); t.textContent="R"; svg.appendChild(t);
+      }
+    });
+  });
+
+  container.appendChild(svg);
+}
+
+/* ---------------- content data ---------------- */
+const SECTIONS = [
+  { id:"basics", label:"零基础乐理" },
+  { id:"degrees", label:"和弦与级数" },
+  { id:"shapes", label:"和弦按法图鉴" },
+  { id:"impro", label:"旋律即兴" },
+  { id:"arrange", label:"伴奏编配" },
+  { id:"apply", label:"应用到《朵儿》" },
+];
+
+function buildNav(){
+  const nav = document.getElementById("nav");
+  SECTIONS.forEach((s, i) => {
+    const btn = document.createElement("button");
+    btn.className = "step-btn";
+    btn.dataset.target = s.id;
+    btn.innerHTML = `<span class="n">${String(i+1).padStart(2,"0")}</span><span>${s.label}</span>`;
+    btn.addEventListener("click", () => showSection(s.id));
+    nav.appendChild(btn);
+  });
+}
+
+function showSection(id){
+  document.querySelectorAll("section.panel").forEach(p => p.classList.toggle("active", p.id === id));
+  document.querySelectorAll(".step-btn").forEach(b => b.classList.toggle("active", b.dataset.target === id));
+  document.getElementById("main").scrollTo?.(0,0);
+  window.scrollTo(0,0);
+  try{ localStorage.setItem("gtb_last_section", id); }catch(e){}
+}
+
+function checklist(container, key, items){
+  const wrap = document.createElement("div");
+  wrap.className = "card";
+  const bar = document.createElement("div");
+  bar.className = "progress-bar";
+  const fill = document.createElement("i");
+  bar.appendChild(fill);
+  wrap.appendChild(bar);
+
+  let state = {};
+  try{ state = JSON.parse(localStorage.getItem(key) || "{}"); }catch(e){}
+
+  function updateBar(){
+    const done = items.filter((_,i)=>state[i]).length;
+    fill.style.width = (items.length ? (done/items.length*100) : 0) + "%";
+  }
+
+  items.forEach((text, i) => {
+    const row = document.createElement("label");
+    row.className = "check-item";
+    const cb = document.createElement("input");
+    cb.type = "checkbox";
+    cb.checked = !!state[i];
+    const span = document.createElement("span");
+    span.textContent = text;
+    if(cb.checked) span.classList.add("done");
+    cb.addEventListener("change", () => {
+      state[i] = cb.checked;
+      span.classList.toggle("done", cb.checked);
+      try{ localStorage.setItem(key, JSON.stringify(state)); }catch(e){}
+      updateBar();
+    });
+    row.appendChild(cb); row.appendChild(span);
+    wrap.appendChild(row);
+  });
+  updateBar();
+  container.appendChild(wrap);
+}
+
+function stepperNav(container, id){
+  const idx = SECTIONS.findIndex(s => s.id === id);
+  const prev = SECTIONS[idx-1], next = SECTIONS[idx+1];
+  const nav = document.createElement("div");
+  nav.className = "stepper-nav";
+  if(prev){
+    const b = document.createElement("button");
+    b.className = "stepper-btn prev";
+    b.innerHTML = `<span class="lbl">← 上一节</span><span class="ttl">${prev.label}</span>`;
+    b.addEventListener("click", ()=>showSection(prev.id));
+    nav.appendChild(b);
+  } else { nav.appendChild(document.createElement("span")); }
+  if(next){
+    const b = document.createElement("button");
+    b.className = "stepper-btn next";
+    b.innerHTML = `<span class="lbl">下一节 →</span><span class="ttl">${next.label}</span>`;
+    b.addEventListener("click", ()=>showSection(next.id));
+    nav.appendChild(b);
+  }
+  container.appendChild(nav);
+}
+
+/* ---------------- section builders ---------------- */
+function el(tag, attrs, html){
+  const e = document.createElement(tag);
+  if(attrs) for(const k in attrs) e.setAttribute(k, attrs[k]);
+  if(html !== undefined) e.innerHTML = html;
+  return e;
+}
+
+function buildBasics(root){
+  root.appendChild(el("div",{class:"eyebrow"},"01 · 从零开始"));
+  root.appendChild(el("h1",{class:"title"},"先认识指板上的音"));
+  root.appendChild(el("p",{class:"dek"},"不背五线谱也没关系——吉他上的乐理，本质是\"指板上哪两个格子之间差多远\"。这一节把最基础的几个概念讲透，后面所有内容都建立在它上面。"));
+
+  root.appendChild(el("h2",{class:"sec"},"半音与全音：指板上的最小单位"));
+  root.appendChild(el("p",{},"吉他每一品（fret）之间，就是一个<b>半音</b>。相邻两品的音永远差半音；隔一品（两格）就是全音</b>。这是整个乐理体系唯一的\"度量单位\"，大调音阶、和弦、五声音阶全部是从它搭出来的。"));
+
+  root.appendChild(el("div",{class:"card"},`
+    <p class="tight" style="margin-bottom:10px;"><b>以低音 E 弦（第6弦）为例，从空弦往上数半音：</b></p>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>品格</th><th>0（空弦）</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th></tr></thead>
+      <tbody><tr><td class="mono">音名</td><td class="mono">E</td><td class="mono">F</td><td class="mono">F#/Gb</td><td class="mono">G</td><td class="mono">G#/Ab</td><td class="mono">A</td></tr></tbody>
+    </table></div>
+    <p class="tight" style="margin-top:10px; color:var(--muted); font-size:13.5px;">E→F 只差一品，是半音；E→F#（隔一品到G）算下来是全音。你的谱子上"变调夹夹4品"，意思就是把这条空弦音直接从 E 顶到 G#/Ab——所有和弦指法不用变，实际听到的音统一升高了4个半音。</p>
+  `));
+
+  root.appendChild(el("h2",{class:"sec"},"大调音阶：全全半全全全半"));
+  root.appendChild(el("p",{},"任何一个大调音阶，都是按同一个公式在12个半音里\"挑\"出7个音："));
+  root.appendChild(el("p",{class:"mono", style:"color:var(--accent); font-size:15px; margin-bottom:16px;"},"全 - 全 - 半 - 全 - 全 - 全 - 半"));
+  root.appendChild(el("div",{class:"card"},`
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>级数</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>1（高八度）</th></tr></thead>
+      <tbody>
+        <tr><td class="mono">简谱唱名</td><td class="mono">do</td><td class="mono">re</td><td class="mono">mi</td><td class="mono">fa</td><td class="mono">sol</td><td class="mono">la</td><td class="mono">si</td><td class="mono">do</td></tr>
+        <tr><td class="mono">C大调音名</td><td class="mono">C</td><td class="mono">D</td><td class="mono">E</td><td class="mono">F</td><td class="mono">G</td><td class="mono">A</td><td class="mono">B</td><td class="mono">C</td></tr>
+      </tbody>
+    </table></div>
+  `));
+  root.appendChild(el("div",{class:"callout"},`<b>和你的谱子对上号：</b>吉他谱上常见的 <span class="mono">0115 2·1171</span> 这类数字就是简谱（首调唱名），1=do=C。你看谱时脑子里已经在用简谱思维了，只是还没把它和"级数"这个概念连起来——这正是下一节要讲的。`));
+
+  const items = [
+    "我能说出吉他上\"半音\"和\"全音\"分别是几品的距离",
+    "我记住了大调音阶公式：全全半全全全半",
+    "我理解了变调夹的作用：指法不变，实际音高整体上移",
+  ];
+  root.appendChild(el("h2",{class:"sec"},"自查"));
+  checklist(root, "gtb_check_basics", items);
+  stepperNav(root, "basics");
+}
+
+function buildDegrees(root){
+  root.appendChild(el("div",{class:"eyebrow"},"02 · 和声语言"));
+  root.appendChild(el("h1",{class:"title"},"和弦是怎么\"长\"出来的"));
+  root.appendChild(el("p",{class:"dek"},"每个大调音阶上的7个音，各自往上叠两个\"隔一个音\"的音，就得到7个和弦——这就是一首歌全部和弦的来源。"));
+
+  root.appendChild(el("h2",{class:"sec"},"三和弦：1-3-5 叠罗汉"));
+  root.appendChild(el("p",{},"从音阶的某一级出发，往上隔一个音取一个音（1、3、5），就是一个三和弦。以C大调音阶为例，7个音分别当\"根音\"往上叠，得到7个和弦："));
+  root.appendChild(el("div",{class:"tbl-wrap"},`
+    <table>
+      <thead><tr><th>级数</th><th>I</th><th>ii</th><th>iii</th><th>IV</th><th>V</th><th>vi</th><th>vii°</th></tr></thead>
+      <tbody>
+        <tr><td class="mono">和弦</td><td class="mono">C</td><td class="mono">Dm</td><td class="mono">Em</td><td class="mono">F</td><td class="mono">G</td><td class="mono">Am</td><td class="mono">Bdim</td></tr>
+        <tr><td class="mono">性质</td><td>大三和弦</td><td>小三和弦</td><td>小三和弦</td><td>大三和弦</td><td>大三和弦</td><td>小三和弦</td><td>减三和弦</td></tr>
+      </tbody>
+    </table>
+  `));
+  root.appendChild(el("p",{class:"tight", style:"color:var(--muted); font-size:13.5px;"},"大写罗马数字＝大三和弦，小写＝小三和弦——这套\"级数记号\"的好处是：换了调，数字不变，你可以直接把同一套逻辑套到任何一首歌上。"));
+
+  root.appendChild(el("h2",{class:"sec"},"三大功能：稳定 / 铺垫 / 推动"));
+  root.appendChild(el("p",{},"7个和弦不是各自为战，它们按\"功能\"分成三组，理解这三组关系，簱能听懂一首歌的和声逻辑，而不是死记和弦顺序："));
+  root.appendChild(el("div",{class:"grid3"},`
+    <div class="card">
+      <span class="pill tonic">主 · 稳定</span>
+      <h3 class="sub" style="margin-top:10px;">I　vi　iii</h3>
+      <p class="tight" style="font-size:13.5px;">C / Am / Em — 听感上"回家了"，句子可以在这里结束</p>
+    </div>
+    <div class="card">
+      <span class="pill sub">下属 · 铺垫</span>
+      <h3 class="sub" style="margin-top:10px;">IV　ii</h3>
+      <p class="tight" style="font-size:13.5px;">F / Dm — 离开主和弦，为下一步蓄力，常用来引入副歌</p>
+    </div>
+    <div class="card">
+      <span class="pill dom">属 · 推动</span>
+      <h3 class="sub" style="margin-top:10px;">V　vii°</h3>
+      <p class="tight" style="font-size:13.5px;">G / Bdim — 张力最强，天生"想要"解决回主和弦</p>
+    </div>
+  `));
+
+  root.appendChild(el("h2",{class:"sec"},"套到《朵儿》"� I-V-vi-IV"));
+  root.appendChild(el("p",{},"这首歌主歌部分反复用 <span class=\"mono\">C-G-Am</span>，副歌前后加入 <span class=\"mono\">F</span>，写成级数就是最经典的流行进行："));
+  root.appendChild(el("p",{class:"mono", style:"font-size:20px; color:var(--ink); margin-bottom:6px;"},
+    `<span style="color:var(--tonic)">I</span> → <span style="color:var(--accent)">V</span> → <span style="color:var(--tonic)">vi</span> → <span style="color:var(--subdom)">IV</span>　（C → G → Am → F）`));
+  root.appendChild(el("div",{class:"callout"},`<b>为什么这四个和弦总在一起：</b>I 给出稳定的\"家\"，V 立刻制造推力，vi 是I的\"影子\"（同样的稳定感但情绪更内敛），IV 再铺一层准备迎接下一轮。这一组进行在流行乐里出现频率极高，因为它把\"稳定→推动→内敛→铺垫\"四种情绪在4小节里过了一遍——学会认它，你能在很多别的歌里直接认出同一套逻辑。`));
+
+  root.appendChild(el("h3",{class:"sub"},"转调段：级数不变，整体挪个位置"));
+  root.appendChild(el("p",{},"到了全曲情绪最满的一段，谱面上的和弦整体上移了一个大二度（两个半音的两倍）。级数关系完全没变，还是 <span class=\"mono\">I-V-vi-IV</span>，只是\"家\"从C挪到了高一级的位置——这是流行编曲里最常见的\"抬调\"手法，专门用来在歌曲后段制造一次听感上的\"更亮、更用力\"。"));
+
+  const items = [
+    "我能在C大调上说出7个级数分别对应哪个和弦",
+    "我理解主/下属/属三种功能分别给人什么感觉",
+    "我能说出《朵儿》的核心进行是 I-V-vi-IV，并解释为什么这样安排",
+    "我理解转调段是整体级数上移，而不是换了一套新逻辑",
+  ];
+  root.appendChild(el("h2",{class:"sec"},"自查"));
+  checklist(root, "gtb_check_degrees", items);
+  stepperNav(root, "degrees");
+}
+
+function buildShapes(root){
+  root.appendChild(el("div",{class:"eyebrow"},"03 · 手上功夫"));
+  root.appendChild(el("h1",{class:"title"},"和弦按法图鉴"));
+  root.appendChild(el("p",{class:"dek"},"点是手指的位置，圈是空弦要响，叉是这根弦不弹。数字是建议的按弦手指（1食指 2中指 3无名指 4小指）。"));
+
+  root.appendChild(el("h2",{class:"sec"},"开放和弦：C · G · Am · F"));
+  const row = el("div",{class:"chord-row"});
+  root.appendChild(row);
+
+  const cards = [
+    { c:CHORDS.C, cap:"根音在第5弦3品" },
+    { c:CHORDS.G, cap:"根音在第6弦3品" },
+    { c:CHORDS.Am, cap:"C的\"影子\"和弦，指型接近" },
+    { c:CHORDS.F, cap:"食指横按第1品，最容易闷音的一个" },
+  ];
+  cards.forEach(({c,cap}) => {
+    const card = el("div",{class:"chord-card"});
+    card.appendChild(el("div",{class:"name"}, c.name));
+    const svgHost = el("div");
+    card.appendChild(svgHost);
+    renderChordDiagram(svgHost, c);
+    card.appendChild(el("div",{class:"cap"}, cap));
+    row.appendChild(card);
+  });
+
+  root.appendChild(el("h2",{class:"sec"},"横按和弦：可移动的\"万能形状\""));
+  root.appendChild(el("p",{},"横按和弦的价值在于\"形状可以整体平移\"：同一个手型，食指压在第几品，和弦名字就跟着变。谱面上转调段标的那组横按和弦，本质就是把下面这两种形状挪到对应品位。"));
+
+  root.appendChild(el("div",{class:"grid2"},`
+    <div class="card">
+      <h3 class="sub">E型横按（根音在第6弦）</h3>
+      <p class="tight" style="font-size:13.5px;">食指横按整根品，形状照抄开放和弦 <span class="mono">E</span>／<span class="mono">Em</span> 的样子，往上滑到任意一品，根音落在第6弦，弹出的就是那一品对应的大／小和弦。谱面里的F就是这个形状按在第1品的结果。</p>
+    </div>
+    <div class="card">
+      <h3 class="sub">A型横按（根音在第5弦）</h3>
+      <p class="tight" style="font-size:13.5px;">形状照抄开放和弦 <span class="mono">A</span>／<span class="mono">Am</span>，食指横按，根音落在第5弦。适合根音记在第5弦上的和弦，比如需要快速找到 <span class="mono">Am</span> 系横按位置时。</p>
+    </div>
+  `));
+
+  root.appendChild(el("div",{class:"callout tonic"},`<b>练F的诀窍：</b>横按发闷音，八成不是"力气不够"，而是食指第一关节没有卡在品丝正后方，或者手腕没有往内扣。先只压1、2弦练"横按能不能干净响"，稳定后再补齐其余手指——这一条和你之前拿到的分段练习手册里"C→F"难点的解法是同一件事，这里只是把原理讲透。`));
+
+  const items = [
+    "C / G / Am / F 四个开放和弦我能不看图按对",
+    "我理解横按和弦是\"同一个形状整体平移\"",
+    "我知道E型横按根音在第6弦，A型横按根音在第5弦",
+  ];
+  root.appendChild(el("h2",{class:"sec"},"自查"));
+  checklist(root, "gtb_check_shapes", items);
+  stepperNav(root, "shapes");
+}
+
+function buildImpro(root){
+  root.appendChild(el("div",{class:"eyebrow"},"04 · 即兴"));
+  root.appendChild(el("h1",{class:"title"},"用什么音即兴不会跑调"));
+  root.appendChild(el("p",{class:"dek"},"即兴听起来神秘，本质是\"在一小把安全音里挑\"。这一节讲小调五声音阶——民谣/流行即兴用得最多、门槛最低的一套音。"));
+
+  root.appendChild(el("h2",{class:"sec"},"五声音阶：把最容易\"撞车\"的两个音去掉"));
+  root.appendChild(el("p",{},"大调音阶有7个音，其中第4级和第7级最容易和背景和弦\"打架\"（听起来紧张、不稳）。去掉这两个音，剩下5个音——对C大调而言，就是它的<b>关系小调 A小调</b>的五声音阶：<span class=\"mono\">A C D E G</span>。这5个音配合 I-V-vi-IV 这类常见进行，随便怎么组合基本都不会难听，这也是它成为初学者即兴首选的原因。"));
+
+  root.appendChild(el("h2",{class:"sec"},"Box 1：可移动的即兴指型"));
+  root.appendChild(el("div",{class:"fretboard-wrap card"},``));
+  const fbHost = document.querySelector(".fretboard-wrap.card");
+  renderPentatonicBox(fbHost);
+  root.appendChild(el("p",{class:"tight", style:"color:var(--muted); font-size:13.5px; margin-top:-8px;"},"深色点＝根音（R），其余为可弹的音；整个形状可以整体左右平移。把R对准某个和弦的根音所在品，这个形状里的音就是当下最安全的即兴音库。"));
+
+  root.appendChild(el("div",{class:"callout"},`<b>capo在这里帮了你一个忙：</b>夹上变调夹当成新的"品0"，上面这个形状、以及所有找根音的逻辑，都按你平时不夹capo的思路来用就行——不需要额外去换算实际音高，形状是相对的。`));
+
+  root.appendChild(el("h2",{class:"sec"},"落音节奏：什么时候弹哪两音"));
+  root.appendChild(el("ul",{class:"list"},`
+    <li><b>强拍落在和弦音上</b>——当前和弦是C时，强拍尽量落在C/E/G这三个音上，听感最稳；</li>
+    <li><b>弱拍/过渡可以用经过音</b>——五声音阶里不在和弦里的那两三个音，放在两个强拍之间"路过"一下，制造流动感；</li>
+    <li><b>先节奏后音高</b>——即兴卡住时，先只用一个音弹对节奏型，比同时纠结"选哪个音+什么节奏"要容易得多。</li>
+  `));
+
+  root.appendChild(el("h3",{class:"sub"},"套用到《朵儿》"));
+  root.appendChild(el("p",{},"主歌/副歌走的是 <span class=\"mono\">C-G-Am-F</span>，四个和弦的根音分别在第5弦3品（C）、第6弦3品（G）、第5弦0品（Am）、第6弦1品（F）附近。把Box 1的根音依次对上这几个位置，就是这首歌最直接可用的即兴音库；转调段整体挪高一个大二度，根音位置跟着整体平移即可。"));
+
+  const items = [
+    "我能说出A小调五声音阶的5个音",
+    "我理解为什么去掉4级和7级会更安全",
+    "我能把Box 1形状挪到不同品位对应不同和弦的根音",
+  ];
+  root.appendChild(el("h2",{class:"sec"},"自查"));
+  checklist(root, "gtb_check_impro", items);
+  stepperNav(root, "impro");
+}
+
+function buildArrange(root){
+  root.appendChild(el("div",{class:"eyebrow"},"05 · 编配"));
+  root.appendChild(el("h1",{class:"title"},"把一把和弦\"编\"得更丰富"));
+  root.appendChild(el("p",{class:"dek"},"同一组和弦，换一种处理方式，听感能差很多。这些是最常用、性价比最高的几招。"));
+
+  root.appendChild(el("div",{class:"tbl-wrap"},`
+    <table>
+      <thead><tr><th>手法</th><th>原理</th><th>用在哪</th></tr></thead>
+      <tbody>
+        <tr><td><b>低音走动</b></td><td>和弦不变或换弦前，用根音之间的过渡音把低音线连起来，而不是每次都"跳"到新根音</td><td>句与句之间的空拍</td></tr>
+        <tr><td><b>经过和弦</b></td><td>在两个和弦之间插入一个低音级进下行的过渡和弦（如C和Am之间的C/G），让低音线更顺滑</td><td>C→Am反复出现处</td></tr>
+        <tr><td><b>分解替代扫弦</b></td><td>把扫弦改成琶音，制造"欲扬先抑"，为后面的力度爆发蓄力</td><td>进副歌前的过渡段</td></tr>
+        <tr><td><b>力度对比</b></td><td>同一组和弦第二次出现时故意弹得更满/更强，避免机械重复</td><td>主歌重复、副歌重复</td></tr>
+        <tr><td><b>Hammer-on / Pull-off</b></td><td>左手勾/击弦让换和弦的瞬间更连贯，不是硬生生"切"过去</td><td>Am→C这类换弦点</td></tr>
+      </tbody>
+    </table>
+  `));
+
+  root.appendChild(el("h2",{class:"sec"},"为什么这些手法\"合理\"而不是乱加"));
+  root.appendChild(el("p",{},"所有编配技巧的本质，是在<b>不破坏和声功能</b>的前提下增加信息量。经过和弦、走动低音，改变的只是\"怎么仟A走到B\"，不改变A和B本身的功能——这也是为什么第2节讲的\"主/下属/属\"功能一定要先搞懂：只有知道每个和弦在干什么，才能判断加花会不会和它的功能\"打架\"。"));
+
+  root.appendChild(el("div",{class:"callout tonic"},`<b>练习建议：</b>先把原版和弦、原版节奏弹到完全稳定，编配永远是"加分项"。过早加花容易把还没练熟的部分掩盖过去，问题会被藏起来而不是解决。`));
+
+  const items = [
+    "我能说出至少3种编配手法及各自适合的位置",
+    "我理解编配的前提是不破坏和弦的功能关系",
+  ];
+  root.appendChild(el("h2",{class:"sec"},"自查"));
+  checklist(root, "gtb_check_arrange", items);
+  stepperNav(root, "arrange");
+}
+
+function buildApply(root){
+  root.appendChild(el("div",{class:"eyebrow"},"06 · 落地"));
+  root.appendChild(el("h1",{class:"title"},"把这些理论用回《朵儿》"));
+  root.appendChild(el("p",{class:"dek"},"和之前给你的分段练习手册对照着用：手册管\"怎么练熟\"，这一页管\"为什么这样弹\"。"));
+
+  root.appendChild(el("div",{class:"tbl-wrap"},`
+    <table>
+      <thead><tr><th>段落</th><th>和声要点</th><th>可以带入的理论</th></tr></thead>
+      <tbody>
+        <tr><td>前奏 / 主歌A·B</td><td>I-V-vi 循环，情绪克制</td><td>先用Box 1即兴熟悉根音位置，感受"稳定→推动→内敛"的循环感</td></tr>
+        <tr><td>预副歌 / 副歌</td><td>加入IV，铺垫后释放</td><td>试试把扫弦换成分解和弦制造对比；F横按按稳后可以加低音走动</td></tr>
+        <tr><td>转调段</td><td>整体上移一个大二度，级数不变</td><td>横按形状整体平移；即兴时Box 1的根音跟着一起挪</td></tr>
+        <tr><td>再副歌 / 尾奏</td><td>回落收束</td><td>力度对比：比第一次副歌更克制，制造首尾呼应</td></tr>
+      </tbody>
+    </table>
+  `));
+
+  root.appendChild(el("h2",{class:"sec"},"学习节奏建议"));
+  root.appendChild(el("ol",{class:"list"},`
+    <li>第1天：练习手册的听辨+拆段，同时看完本页第1、2节（乐理基础+和弦级数）</li>
+    <li>第2天：攻克和弦转换难点时，同步看第3节（按法图鉴），把横按原理和手上的动作对上</li>
+    <li>第3天：全曲连贯弹唱之后，用第4、5节（即兴+编配）尝试给自己加一两处个人化处理</li>
+  `));
+
+  root.appendChild(el("div",{class:"callout"},`<b>关于软件：</b>我没有办法帮你在电脑上安装第三方看谱/编曲软件——这类操作需要你自己完成。如果想要更专业的可视化与打谱工具，可以考虑 <b>MuseScore</b>（免费、五线谱+六线谱都支持，适合打谱和回放）或 <b>Guitar Pro</b>（付费，六线谱编辑与音效回放很强，练习吉他谱最常用）。这个网页本身可以当作日常复习和自查的地方，随时回来看进度。`));
+
+  const items = [
+    "我能把这首歌的每个段落对应到具体的和声功能",
+    "我在至少一个段落尝试了即兴或编配处理",
+  ];
+  root.appendChild(el("h2",{class:"sec"},"自查"));
+  checklist(root, "gtb_check_apply", items);
+  stepperNav(root, "apply");
+}
+
+/* ---------------- boot ---------------- */
+function boot(){
+  buildNav();
+  const main = document.getElementById("main");
+  const builders = { basics:buildBasics, degrees:buildDegrees, shapes:buildShapes, impro:buildImpro, arrange:buildArrange, apply:buildApply };
+  SECTIONS.forEach(s => {
+    const sec = el("section", { class:"panel", id:s.id });
+    main.appendChild(sec);
+    builders[s.id](sec);
+  });
+  let last = "basics";
+  try{ last = localStorage.getItem("gtb_last_section") || "basics"; }catch(e){}
+  if(!SECTIONS.find(s=>s.id===last)) last = "basics";
+  showSection(last);
+}
+boot();
+</script>
+
+</body>
+</html>
