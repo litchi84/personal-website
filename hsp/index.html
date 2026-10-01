@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>高度人才与永住规划</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@600;700&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#efede7; --card:#f8f7f3; --ink:#22252b; --muted:#6b6f78; --line:#dcd8cf;
+  --accent:#1f3a5f; --ok:#2f6b46; --okbg:#e3efe6; --no:#9a3b2f; --nobg:#f5e4e0;
+  --warn:#8a6414; --warnbg:#f5ecd6;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#17191d; --card:#20232a; --ink:#e7e5df; --muted:#a2a6ae; --line:#353943;
+    --accent:#9cb8de; --ok:#8fcf9f; --okbg:#1f3326; --no:#e59a8d; --nobg:#3a2320;
+    --warn:#e2c27a; --warnbg:#3a3220;
+  }
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.75 "Noto Sans SC",system-ui,sans-serif}
+.wrap{max-width:860px;margin:0 auto;padding:40px 16px 80px}
+.kicker{font-size:12px;letter-spacing:.12em;color:var(--no)}
+h1{font-family:"Noto Serif SC",serif;font-size:32px;margin:6px 0 8px}
+h2{font-family:"Noto Serif SC",serif;font-size:21px;margin:0 0 12px;display:flex;gap:10px;align-items:baseline}
+h2 .n{font-size:13px;color:var(--accent);border:1px solid var(--accent);border-radius:4px;padding:0 6px;font-family:"Noto Sans SC",sans-serif}
+h3{font-size:16px;margin:18px 0 6px}
+.lead{color:var(--muted);margin:0 0 20px}
+nav.toc{display:flex;flex-wrap:wrap;gap:6px 10px;padding:14px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-bottom:28px;font-size:13px}
+nav.toc a{color:var(--accent);text-decoration:none}
+section{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:10px;padding:22px 22px 18px;margin:0 0 20px}
+p{margin:8px 0}
+.verdict{font-weight:700;font-size:16px;margin:0 0 10px}
+table{width:100%;border-collapse:collapse;margin:10px 0 6px;font-size:14px}
+th,td{border-bottom:1px solid var(--line);padding:8px 8px;text-align:left;vertical-align:top}
+th{font-weight:700;color:var(--muted);font-size:13px}
+td.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+tr.total td{font-weight:700;border-top:2px solid var(--ink)}
+.tbl{overflow-x:auto}
+.tag{display:inline-block;font-size:12px;border-radius:999px;padding:0 9px;white-space:nowrap;font-weight:500}
+.ok{background:var(--okbg);color:var(--ok)}
+.no{background:var(--nobg);color:var(--no)}
+.warn{background:var(--warnbg);color:var(--warn)}
+.note{font-size:13px;color:var(--muted)}
+.callout{background:var(--warnbg);border-radius:8px;padding:10px 14px;margin:12px 0;font-size:14px}
+ul{margin:6px 0;padding-left:20px}
+.dl{display:grid;gap:8px}
+.dl a{display:flex;justify-content:space-between;gap:12px;align-items:center;background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:10px 12px;color:var(--ink);text-decoration:none}
+.dl a:hover{border-color:var(--accent)}
+.dl .t{font-weight:500}
+.dl .s{font-size:12px;color:var(--muted)}
+.dl .b{font-size:12px;color:var(--accent);white-space:nowrap}
+.src a{color:var(--accent);word-break:break-all}
+footer{font-size:12px;color:var(--muted);margin-top:30px}
+a.back{color:var(--accent);text-decoration:none;font-size:13px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<a class="back" href="../">← 荔枝小站</a>
+<div class="kicker">私人笔记 · 整理于 2026-10-01</div>
+<h1>高度人才（1号ロ）与永住规划</h1>
+<p class="lead">入职岐建后走高度专门职1号ロ的积分、申请、永住、资格证路线，以及要准备的材料。结论都以入管官方资料为准，下载区附原件。</p>
+
+<nav class="toc">
+<a href="#score">① 我的积分</a><a href="#items">② 逐项判定</a><a href="#apply">③ 两次申请的区别</a><a href="#pr">④ 永住</a><a href="#fee">⑤ 费用与期间</a><a href="#cert">⑥ 施工管理资格</a><a href="#patent">⑦ 专利材料</a><a href="#dl">⑧ 下载</a><a href="#todo">⑨ 待确认</a>
+</nav>
+
+<section id="score">
+<h2><span class="n">01</span>我的积分（1号ロ）</h2>
+<p class="verdict">基础分70点，年收400万以上（29岁以下）时为80点。</p>
+<p>去岐建做施工管理等技术岗，对应技人国的活动，所以属于1号ロ（イ是大学研究员，ハ是经营者）。</p>
+<div class="tbl"><table>
+<tr><th>项目</th><th>依据</th><td class="num"><b>点数</b></td></tr>
+<tr><td>学历：修士号</td><td>冈山大学硕士</td><td class="num">20</td></tr>
+<tr><td>年龄：29岁以下</td><td>按申请时计算</td><td class="num">15</td></tr>
+<tr><td>研究实绩：特许1件</td><td>CN 116608009 B，发明人栏有本人</td><td class="num">15</td></tr>
+<tr><td>ボーナス⑦ 本邦学位</td><td>在日本取得学位</td><td class="num">10</td></tr>
+<tr><td>ボーナス⑪ 告示大学</td><td>冈山大学在入管名单上（排名路线）</td><td class="num">10</td></tr>
+<tr><td>ボーナス⑨ N2</td><td>拿了⑦就不能再算</td><td class="num">0</td></tr>
+<tr class="total"><td>小计</td><td></td><td class="num">70</td></tr>
+<tr><td>年收（含奖金，29岁以下）</td><td>300万是最低门槛；400万起+10，500万+15</td><td class="num">+0～</td></tr>
+</table></div>
+<div class="callout">专利这15点是关键：没有它，加上400万年收也只有65点，过不了70。</div>
+</section>
+
+<section id="items">
+<h2><span class="n">02</span>逐项判定</h2>
+<h3>研究实绩（1号ロ：符合任意一项即15点，封顶）</h3>
+<div class="tbl"><table>
+<tr><th>项目</th><th>判定</th><th>说明</th></tr>
+<tr><td>特许发明1件以上</td><td><span class="tag ok">符合</span></td><td>评价的是发明人身份，不看专利权人；外国已登录专利也可，出愿中不算</td></tr>
+<tr><td>入国前公的机关グラント研究3件以上</td><td><span class="tag no">不符合</span></td><td>大创项目性质不明确、次数和证明都难；且专利已拿满15点，再算也不加分</td></tr>
+<tr><td>Scopus 论文3本以上（責任著者或筆頭著者）</td><td><span class="tag no">不符合</span></td><td>筆頭著者要求贡献度高，单纯字母顺序靠前不算</td></tr>
+<tr><td>其他同等实绩（法务大臣个别判断）</td><td><span class="tag no">不适用</span></td><td>法国交换属于学习经历，不是研究成果</td></tr>
+</table></div>
+<p class="note">1号イ（研究员）才有"2项以上25点"的规定；1号ロ无论几项都是15点。</p>
+
+<h3>ボーナス项目</h3>
+<div class="tbl"><table>
+<tr><th>项目</th><th>判定</th><th>说明</th></tr>
+<tr><td>③ 日本国家资格（1个5点，最多10）</td><td><span class="tag warn">待确认</span></td><td>只认业务独占或名称独占资格；1級土木施工管理技士補能否算没有找到明确依据，申请前问入管</td></tr>
+<tr><td>④ 创新支援措置机构</td><td><span class="tag warn">大概率否</span></td><td>要看岐建是否正在接受告示列举的支援措置，公开信息查不到</td></tr>
+<tr><td>⑤ 研发费比率3%超的中小企业</td><td><span class="tag no">不符合</span></td><td>岐建资本金5亿、员工523人，不属于中小企业</td></tr>
+<tr><td>⑦ 本邦学位</td><td><span class="tag ok">符合</span></td><td>10点，可与学历、⑪叠加</td></tr>
+<tr><td>⑧ N1</td><td><span class="tag warn">12月考</span></td><td>合格即+15，不受⑦影响</td></tr>
+<tr><td>⑨ N2</td><td><span class="tag no">不可叠加</span></td><td>拿了⑦或⑧就不能算</td></tr>
+<tr><td>⑩ 成长领域先端事业</td><td><span class="tag no">不符合</span></td><td>入管名单（令和8年3月）里没有国土交通省的项目</td></tr>
+<tr><td>⑪ 告示大学</td><td><span class="tag ok">符合</span></td><td>日本的大学只要在QS/THE/上海交大任一排名上榜即可，不要求前300；冈山大学在入管名单第7页</td></tr>
+<tr><td>⑫ 告示研修</td><td><span class="tag no">不适用</span></td><td>只指外务省创新亚洲事业下JICA实施的1年以上研修</td></tr>
+</table></div>
+</section>
+
+<section id="apply">
+<h2><span class="n">03</span>两次申请的区别</h2>
+<p class="verdict">换高度专门职用"预定年收"；申永住时要用实际记录回头核对。</p>
+<div class="tbl"><table>
+<tr><th></th><th>第一次：换成高度专门职</th><th>第二次：永住</th></tr>
+<tr><td>看哪个时点</td><td>申请当时</td><td>申请当天 + 往前推1年（或3年）</td></tr>
+<tr><td>年收证明</td><td>雇用契约上的预定年收（写明含奖金的年额）</td><td>实际工资、源泉征收票、课税证明</td></tr>
+<tr><td>是否需要工作经历</td><td>不需要</td><td>需要（从入职起算）</td></tr>
+</table></div>
+<h3>入职时怎么换</h3>
+<div class="tbl"><table>
+<tr><th></th><th>直接换高度专门职</th><th>先拿技人国，再换</th></tr>
+<tr><td>适合</td><td>年收≥400万且专利材料齐全</td><td>年收300～400万，或专利材料没把握</td></tr>
+<tr><td>在留期间</td><td>5年</td><td>通常较短</td></tr>
+<tr><td>永住等待时间</td><td>相同</td><td>相同（看积分，不看在留资格）</td></tr>
+<tr><td>风险</td><td>被拒时留学资格的活动已结束，要赶紧改申技人国</td><td>低</td></tr>
+</table></div>
+<p class="note">时间线示例（假设2027年4月入职）：2027年4月用预定年收换高度专门职（80点）→ 2028年4月申永住，核对申请时和2027年4月两个时点都是80点。</p>
+</section>
+
+<section id="pr">
+<h2><span class="n">04</span>永住</h2>
+<div class="tbl"><table>
+<tr><th></th><th>1年路线</th><th>3年路线</th></tr>
+<tr><td>积分</td><td>80点以上</td><td>70点以上，且3年间持续保持</td></tr>
+<tr><td>判定时点</td><td>申请时 + 申请1年前</td><td>申请时 + 申请3年前</td></tr>
+<tr><td>我的条件</td><td>年收≥400万</td><td>年收≥300万</td></tr>
+</table></div>
+<h3>1年路线成立需要同时满足</h3>
+<ul>
+<li>预定年收（含奖金）≥400万，公司出书面证明</li>
+<li>专利被入管认可</li>
+<li>申请永住时仍未满30岁：满30岁年龄分降到10，且30～34岁年收要500万起才计分</li>
+<li>这一年实际年收确实≥400万</li>
+<li>纳税、年金、健保按时缴纳，素行良好</li>
+</ul>
+<h3>容易混淆的点</h3>
+<ul>
+<li><b>学生期间不算</b>：3年路线看的是"3年前就有70点"，学生时期没有工作和年收，积分不成立。1年、3年都从入职起算。</li>
+<li><b>不需要实际持有高度专门职</b>：持技人国的人只要积分满足同样适用。</li>
+</ul>
+</section>
+
+<section id="fee">
+<h2><span class="n">05</span>费用与审查期间</h2>
+<p class="verdict">2026年10月1日起按新手数料，以申请受理日为准。</p>
+<div class="tbl"><table>
+<tr><th>申请</th><th>窗口</th><th>在线</th><th>审查期间</th></tr>
+<tr><td>换成高度专门职1号（在留期间5年）</td><td class="num">75,000日元</td><td class="num">65,000日元</td><td>入管目标受理后5天以内（优先处理）</td></tr>
+<tr><td>永住</td><td class="num">200,000日元</td><td class="num">—</td><td>无优先处理；某行政书士事务所数据东京约1年半</td></tr>
+</table></div>
+<p class="note">研究实绩走"法务大臣个别判断"那一项的不适用优先处理；专利不属于这种。</p>
+</section>
+
+<section id="cert">
+<h2><span class="n">06</span>施工管理资格（1級土木施工管理技士）</h2>
+<p class="verdict">两场考试，中间隔着实务年数；第一年先考1級第一次。</p>
+<div class="tbl"><table>
+<tr><th>阶段</th><th>条件</th><th>取得</th></tr>
+<tr><td>1級第一次（选择题）</td><td>年度内满19岁即可，不问经验</td><td>1級土木施工管理技士補</td></tr>
+<tr><td>积累实务</td><td>第一次合格发表日起算，年数只算到考试当年4月底</td><td>—</td></tr>
+<tr><td>1級第二次（记述式）</td><td>①实务5年；②含特定实务1年的实务3年；③监理技术者补佐1年</td><td>1級土木施工管理技士</td></tr>
+</table></div>
+<h3>我的时间线（2027年7月考过第一次）</h3>
+<div class="tbl"><table>
+<tr><th>路线</th><th>考第二次</th><th>取得</th></tr>
+<tr><td>特定实务3年（推荐规划）</td><td>2031年</td><td>2032年1月前后</td></tr>
+<tr><td>标准5年</td><td>2033年</td><td>2034年1月前后</td></tr>
+<tr><td>监理技术者补佐1年</td><td colspan="2">理论最快，新人不现实</td></tr>
+</table></div>
+<p class="note">令和9年度1級第一次：只考第一次的申请期3月17日～4月6日，7月初考试，8月3日发榜。特定实务指请负金额4,500万日元以上土木工事中，在监理/主任技术者指导下做施工管理。</p>
+<h3>相关资格与学习时长（备考网站估算，差距可达2～3倍）</h3>
+<div class="tbl"><table>
+<tr><th>资格</th><th>受验条件</th><th>学习时长</th></tr>
+<tr><td>2級土木 第一次</td><td>17岁以上</td><td>60～120小时</td></tr>
+<tr><td>2級土木 第二次</td><td>需实务</td><td>60～100小时</td></tr>
+<tr><td>1級土木 第一次</td><td>19岁以上</td><td>120～200小时（另有估200～300）</td></tr>
+<tr><td>1級土木 第二次</td><td>需实务</td><td>100～180小时（另有估200～300）</td></tr>
+<tr><td>2級／1級建築施工管理</td><td>同体系</td><td>100～300／100～400小时</td></tr>
+<tr><td>測量士補</td><td>无经验要求，每年5月</td><td>约200小时（合格者多为100～150）</td></tr>
+<tr><td>測量士</td><td>—</td><td>300～500小时</td></tr>
+<tr><td>技術士（建设部门）第一次</td><td>—</td><td>仅一例经验者约300小时</td></tr>
+</table></div>
+<p class="note">不必先考2級：令和6年度改制后1級第一次不问经验，2級范围基本被1級覆盖。施工管理技士共7种（土木、建築、電気工事、管工事、造園、建設機械、電気通信工事）。</p>
+</section>
+
+<section id="patent">
+<h2><span class="n">07</span>专利证明材料</h2>
+<div class="tbl"><table>
+<tr><th>材料</th><th>作用</th><th>怎么拿</th></tr>
+<tr><td><b>专利证书复印件</b>（核心）</td><td>入管举例的正式证明（写有申请人姓名的特许证复印件）</td><td>证书发给专利权人安徽建筑大学；向学校科研处或代理机构（北京合创致信）要复印件或电子证书</td></tr>
+<tr><td>授权公告文本首页</td><td>显示授权公告号、授权日2024.04.09、发明人栏</td><td>已持有，见下载区</td></tr>
+<tr><td>日文翻译</td><td>中文材料通常需附译文</td><td>自行翻译发明名称、公告号、授权日、发明人栏</td></tr>
+</table></div>
+<ul>
+<li>发明人栏要有「李志浩」；专利权属于学校没关系</li>
+<li>姓名对应：翻译里写明「李志浩＝LI ZHIHAO」</li>
+<li>是否仍缴年费维持有效不重要</li>
+</ul>
+</section>
+
+<section id="dl">
+<h2><span class="n">08</span>下载</h2>
+<h3>我的材料</h3>
+<div class="dl">
+<a href="files/专利正文-分层注浆.pdf" download><span><span class="t">专利授权公告文本 CN 116608009 B</span><br><span class="s">分层冻结与注浆加固效果实时监测方法 · 15页</span></span><span class="b">下载 PDF</span></a>
+<a href="files/专利证明材料清单.xlsx" download><span><span class="t">专利证明材料清单</span><br><span class="s">准备状态可下拉更新</span></span><span class="b">下载 XLSX</span></a>
+</div>
+<h3>入管官方资料（2026-10-01 下载）</h3>
+<div class="dl">
+<a href="files/moj-point-table.pdf" download><span><span class="t">ポイント計算表</span><br><span class="s">各项目与点数</span></span><span class="b">下载 PDF</span></a>
+<a href="files/moj-qa-r8.pdf" download><span><span class="t">高度人材ポイント制 Q&amp;A（令和8年4月时点）</span><br><span class="s">国家资格、审查期间、永住要件</span></span><span class="b">下载 PDF</span></a>
+<a href="files/moj-kokuji-special-points.pdf" download><span><span class="t">特別加算（法務省告示）</span><br><span class="s">告示大学、研修、支援措置一览</span></span><span class="b">下载 PDF</span></a>
+<a href="files/moj-university-list-r8.pdf" download><span><span class="t">世界大学ランキングに基づく加点対象大学（令和8年1月时点）</span><br><span class="s">冈山大学在第7页</span></span><span class="b">下载 PDF</span></a>
+<a href="files/moj-advanced-projects-r8.pdf" download><span><span class="t">成長分野の先端的事業一覧（令和8年3月时点）</span><br><span class="s">ボーナス⑩</span></span><span class="b">下载 PDF</span></a>
+<a href="files/moj-fee-revision-r8.pdf" download><span><span class="t">在留手続の手数料改定 リーフレット（2026年10月1日から）</span><br><span class="s">变更・更新・永住费用</span></span><span class="b">下载 PDF</span></a>
+<a href="files/jctc-1kyu-doboku-2ji-tebiki-r8.pdf" download><span><span class="t">1級土木 第二次検定 新受検資格 受検の手引（令和8年度）</span><br><span class="s">全国建設研修センター · 实务年数要件</span></span><span class="b">下载 PDF</span></a>
+</div>
+</section>
+
+<section id="todo">
+<h2><span class="n">09</span>待确认</h2>
+<ul>
+<li>岐建年收（含奖金）是否≥400万，能否出写明年额的文件</li>
+<li>距离30岁还有多久</li>
+<li>专利能否被认可：带材料问入管窗口或行政书士</li>
+<li>1級土木施工管理技士補是否算名称独占资格</li>
+<li>"1年前"从何时起算（理解为入职满1年）</li>
+<li>外文材料须附日文翻译的具体要求</li>
+</ul>
+</section>
+
+<section class="src">
+<h2><span class="n">10</span>出处</h2>
+<ul>
+<li><a href="https://www.moj.go.jp/isa/applications/resources/newimmiact_3_evaluate_index.html">入管 ポイント評価の仕組みは？</a></li>
+<li><a href="https://www.moj.go.jp/isa/applications/resources/newimmiact_3_qa.html">入管 高度人材ポイント制 Q&amp;A</a></li>
+<li><a href="https://www.moj.go.jp/isa/applications/status/newimmiact_3_procedure_index.html">入管 手続きの流れ・申請書類</a></li>
+<li><a href="https://office-forest.jp/highly-skilled-professional_5/">行政書士事務所フォレスト 研究実績の審査運用</a></li>
+<li><a href="https://continental-immigration.com/hsp/pr_requirement/hsp80p/">コンチネンタル国際行政書士事務所 永住80点以上</a></li>
+<li><a href="https://www.moj.go.jp/isa/01_00644.html">入管 令和8年10月1日付け在留許可手数料の額の改定等</a></li>
+<li><a href="https://calico-legal.com/permanent-examination-period/">CALICO LEGAL 永住審査期間</a></li>
+<li><a href="https://www.giken-kk.co.jp/company/profile/">岐建 会社概要</a></li>
+<li><a href="https://www.jctc.jp/exam/doboku-1_new_02/">全国建設研修センター 1級土木（令和9年度）</a></li>
+<li><a href="https://andpad.jp/columns/0299">ANDPAD 1級土木の受験資格</a></li>
+<li><a href="https://www.lrtk.lefixea.com/blog-js/civil-engineering-manager5">LRTK 施工管理技士の勉強時間</a></li>
+<li><a href="https://jobhouse.jp/construction/columns/1916">ジョブハウス建設 測量士補の勉強時間</a></li>
+</ul>
+</section>
+
+<footer>本页为个人整理，制度以入管最新公布为准。</footer>
+</div>
+</body>
+</html>
