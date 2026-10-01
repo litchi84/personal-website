@@ -30,5 +30,13 @@
     "desc": "吉他乐理、和弦级数、按法图鉴与即兴/编配互动手册",
     "path": "./guitar-notes/",
     "status": "live"
+  },
+  {
+    "id": "hsp",
+    "mark": "HSP",
+    "title": "高度人才与永住规划",
+    "desc": "1号ロ积分、申请与永住路线、施工管理资格、专利材料，附入管官方资料下载",
+    "path": "./hsp/",
+    "status": "live"
   }
 ]
